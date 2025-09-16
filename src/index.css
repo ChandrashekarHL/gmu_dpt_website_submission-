@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GMU AI/ML Department Design System - Professional Academic Theme
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* GMU Brand Colors */
+    --background: 0 0% 98%;
+    --foreground: 0 35% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 35% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 35% 15%;
+
+    /* GMU Maroon Primary */
+    --primary: 0 45% 25%;
+    --primary-foreground: 45 100% 95%;
+    --primary-glow: 0 45% 35%;
+
+    /* GMU Gold Secondary */
+    --secondary: 45 85% 65%;
+    --secondary-foreground: 0 45% 25%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 15% 45%;
+
+    /* Gold Accent */
+    --accent: 45 85% 65%;
+    --accent-foreground: 0 45% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 15% 90%;
+    --input: 0 15% 90%;
+    --ring: 0 45% 25%;
+
+    /* Custom GMU Design Tokens */
+    --gmu-maroon: 0 45% 25%;
+    --gmu-gold: 45 85% 65%;
+    --gmu-light-gold: 45 85% 85%;
+    --gmu-dark-maroon: 0 45% 15%;
+    
+    /* Beautiful Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--gmu-maroon)), hsl(var(--primary-glow)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gmu-gold)), hsl(var(--gmu-light-gold)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--gmu-maroon)) 0%, hsl(var(--gmu-dark-maroon)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+    
+    /* Elegant Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--gmu-maroon) / 0.2);
+    --shadow-glow: 0 0 40px hsl(var(--gmu-gold) / 0.3);
+    --shadow-card: 0 4px 20px hsl(var(--gmu-maroon) / 0.1);
+    
+    /* Smooth Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 25% 8%;
+    --foreground: 45 100% 95%;
+
+    --card: 0 25% 10%;
+    --card-foreground: 45 100% 95%;
+
+    --popover: 0 25% 10%;
+    --popover-foreground: 45 100% 95%;
+
+    --primary: 45 85% 65%;
+    --primary-foreground: 0 45% 15%;
+    --primary-glow: 45 85% 75%;
+
+    --secondary: 0 35% 20%;
+    --secondary-foreground: 45 85% 65%;
+
+    --muted: 0 25% 15%;
+    --muted-foreground: 45 25% 65%;
+
+    --accent: 45 85% 65%;
+    --accent-foreground: 0 45% 15%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 25% 20%;
+    --input: 0 25% 20%;
+    --ring: 45 85% 65%;
+    
+    /* Dark Mode Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--gmu-gold)), hsl(var(--primary-glow)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gmu-gold)), hsl(45 85% 75%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 25% 8%) 0%, hsl(0 35% 12%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 25% 10%) 0%, hsl(0 25% 12%) 100%);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Professional Card Styles */
+  .card-elegant {
+    @apply bg-card border border-border rounded-xl shadow-lg;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .card-elegant:hover {
+    box-shadow: var(--shadow-elegant);
+    transform: translateY(-2px);
+  }
+  
+  /* Hero Section Styles */
+  .hero-gradient {
+    background: var(--gradient-hero);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hero-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, hsl(var(--gmu-gold) / 0.1) 50%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  
+  @keyframes shimmer {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+  
+  /* Professional Button Variants */
+  .btn-gmu {
+    @apply inline-flex items-center justify-center rounded-lg text-sm font-semibold transition-all;
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .btn-gmu:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+  
+  .btn-gold {
+    @apply inline-flex items-center justify-center rounded-lg text-sm font-semibold transition-all;
+    background: var(--gradient-gold);
+    color: hsl(var(--accent-foreground));
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .btn-gold:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+}

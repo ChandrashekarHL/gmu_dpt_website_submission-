@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department of Artificial Intelligence & Machine Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #651E1E;
+        }
+        .section-container {
+            padding: 4rem 1.5rem;
+        }
+        .card {
+            background-color: rgb(235,195,92);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 2.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .nav-link:hover {
+            color: #651E1E;
+        }
+        .hamburger-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #651E1E;
+            margin: 5px 0;
+            transition: all 0.3s ease-in-out;
+        }
+        .hamburger-icon.open span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-icon.open span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4d1515, #651E1E);
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #717171;
+            box-shadow: 0 0 0 3px rgba(101, 30, 30, 0.2);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-[#651E1E] text-white">
+
+    <header class="bg-[#4d1515] sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-extrabold text-white p-2 hover:bg-white hover:text-[#651E1E] rounded-lg transition-colors duration-300">
+                AIML Department
+            </a>
+
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                <a href="#about" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">About</a>
+                <a href="#message" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">HoD's Message</a>
+                <a href="#vision" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Vision</a>
+                <a href="#programs" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Programs</a>
+                <a href="#faculty-profile" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Faculty</a>
+                <a href="#research" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Research</a>
+                <a href="#projects" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Projects</a>
+                <a href="#admissions" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Admissions</a>
+                <a href="#placement" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Placements</a>
+                <a href="#alumni" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Alumni</a>
+                <a href="#contact" class="nav-link text-lg font-medium text-gray-200 hover:text-white transition-colors duration-200">Contact</a>
+                <div id="auth-buttons" class="flex space-x-2">
+                    <button id="login-btn" class="bg-yellow-400 text-[#651E1E] font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors duration-300">Login</button>
+                    <button id="logout-btn" class="hidden bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors duration-300">Logout</button>
+                </div>
+                <div id="user-info" class="hidden text-sm text-gray-200 ml-4 flex items-center">
+                    <span id="user-display-name"></span>
+                    <span id="user-role" class="ml-2 px-2 py-1 bg-gray-700 text-gray-200 rounded-full text-xs font-semibold"></span>
+                </div>
+            </nav>
+
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="hamburger-icon rounded-full p-2 hover:bg-gray-100 transition-colors duration-300">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#651E1E] shadow-lg py-2">
+            <nav class="flex flex-col space-y-2 px-4">
+                <a href="#about" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">About the Department</a>
+                <a href="#message" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">HoD’s Message</a>
+                <a href="#vision" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Vision, Mission and Objectives</a>
+                <a href="#programs" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Programs and Courses Offered</a>
+                <a href="#resources" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Learning Resources</a>
+                <a href="#faculty-profile" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Faculty Profile</a>
+                <a href="#research" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Research & Publication Profile</a>
+                <a href="#projects" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Student Projects</a>
+                <a href="#admissions" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Admission Activities</a>
+                <a href="#iqac" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">IQAC Documents</a>
+                <a href="#placement" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Placement Activities</a>
+                <a href="#faculty-achievements" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Faculty Achievements</a>
+                <a href="#student-achievements" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Student Achievements</a>
+                <a href="#alumni" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Department Alumni</a>
+                <a href="#contact" class="block py-2 text-white hover:bg-[#4d1515] rounded-md transition-colors duration-200">Contact Us</a>
+                
+                <button id="mobile-login-btn" class="bg-yellow-400 text-[#651E1E] font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors duration-300 w-full">Login</button>
+                <button id="mobile-logout-btn" class="hidden bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors duration-300 w-full">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <section id="home" class="section-container text-center gradient-bg text-white rounded-3xl mt-8 p-12 shadow-lg">
+            <h1 class="text-5xl font-extrabold mb-4 animate-pulse">Welcome to the Department of Artificial Intelligence & Machine Learning</h1>
+            <p class="text-xl max-w-2xl mx-auto">
+                Shaping the future of technology through innovation, education, and research.
+            </p>
+            <div class="mt-8">
+                <img src="https://tse1.mm.bing.net/th/id/OIP.6JdfTzRbNlDZAO-ZSTG76QHaE7?pid=Api&P=0&h=180" alt="Campus building with students" class="rounded-xl shadow-xl mx-auto">
+            </div>
+        </section>
+
+        <section id="about" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">1. About the Department</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    The Department of Computer Science is a vibrant hub of academic excellence and cutting-edge research. Established with a vision to impart quality education and foster a spirit of innovation, we offer a comprehensive range of programs designed to equip students with the skills required to excel in the dynamic field of technology. Our dedicated faculty, state-of-the-art facilities, and strong industry collaborations create an environment where students can thrive and realize their full potential.
+                </p>
+            </div>
+        </section>
+
+        <section id="message" class="section-container">
+            <div class="card bg-orange-100">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">2. HoD’s Message</h2>
+                <div class="flex flex-col md:flex-row items-center md:space-x-8">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.Y04Jkg_VJQLs-PV7Itca-QHaHa?pid=Api&P=0&h=180" alt="Head of Department" class="rounded-full w-32 h-32 mb-4 md:mb-0 border-4 border-orange-200">
+                    <div class="text-gray-700">
+                        <p class="mb-2 leading-relaxed">
+                            "It is with immense pleasure that I welcome you to the Department of Computer Science. In an era where technology is rapidly evolving, our goal is to not only keep pace but to be at the forefront of this change. We are committed to providing a rich learning experience that combines rigorous academics with practical, hands-on application. Our curriculum is designed to challenge students, encouraging critical thinking and problem-solving skills. I am confident that our graduates will be the leaders and innovators of tomorrow, driving progress in various industries."
+                        </p>
+                        <p class="font-bold mt-4">- Dr.Asha K , Head of Department</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vision" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">3. Vision, Mission and Objectives of the Department</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="p-6 bg-orange-100 rounded-2xl shadow-md">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-2">Vision</h3>
+                        <p class="text-gray-700">To be a globally recognized center of excellence in computer science education and research, fostering innovation and social responsibility.</p>
+                    </div>
+                    <div class="p-6 bg-orange-100 rounded-2xl shadow-md">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-2">Mission</h3>
+                        <p class="text-gray-700">To provide a strong theoretical foundation, practical skills, and ethical values to students, enabling them to become competent professionals and lifelong learners.</p>
+                    </div>
+                    <div class="p-6 bg-orange-100 rounded-2xl shadow-md">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-2">Objectives</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Offer high-quality academic programs.</li>
+                            <li>Promote interdisciplinary research.</li>
+                            <li>Encourage industry collaboration.</li>
+                            <li>Develop holistic personalities.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="programs" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">4. Programs and Courses Offered</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-orange-100 p-6 rounded-lg shadow-inner">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-4">Undergraduate Programs</h3>
+                        <p class="text-gray-700 mb-4">Our undergraduate programs provide a strong foundation in core computer science principles.</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1">
+                            <li>B.Tech in Artificial Intelligence & Machine Learning</li>
+                            <li>B.S. in Software Engineering</li>
+                        </ul>
+                    </div>
+                    <div class="bg-orange-100 p-6 rounded-lg shadow-inner">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-4">Postgraduate Programs</h3>
+                        <p class="text-gray-700 mb-4">Our postgraduate programs offer specialized knowledge in emerging fields.</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1">
+                            <li>M.Tech in Artificial Intelligence and Machine Learning</li>
+                            <li>M.S. in Data Science</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="section-container">
+            <div class="card bg-orange-100">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">5. Department Learning Resources</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <div class="p-4 bg-white rounded-xl shadow-md">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.d8FyaqT8WkX-0Ss4cx37owHaFk?pid=Api&P=0&h=180" alt="Labs icon" class="mx-auto mb-2">
+                        <h3 class="font-semibold text-gray-900">State-of-the-Art Labs</h3>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl shadow-md">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.VqUvyv6ojIxR8po7oCbmaQHaFj?pid=Api&P=0&h=180" alt="Library icon" class="mx-auto mb-2">
+                        <h3 class="font-semibold text-gray-900">Digital Library</h3>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl shadow-md">
+                        <img src="https://tse1.mm.bing.net/th/id/OIP.3c87_0OMjhA7isXhdZjP8wHaE7?pid=Api&P=0&h=180" alt="Moodle icon" class="mx-auto mb-2">
+                        <h3 class="font-semibold text-gray-900">Moodle Platform</h3>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl shadow-md">
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.YzIBFwBF9nYNOFoI3FokNAHaEd?pid=Api&P=0&h=180" alt="Spaces icon" class="mx-auto mb-2">
+                        <h3 class="font-semibold text-gray-900">Collaborative Spaces</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faculty-profile" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">6. Department Faculty Profile</h2>
+                <p class="text-gray-700 mb-6">
+                    Meet our team of experts and dedicated mentors.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-orange-100 p-6 rounded-3xl text-center shadow-md">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.SeA88rz4zipfgyPLBQfIrgHaHa?pid=Api&P=0&h=180" alt="Mr.Chethan G S" class="rounded-full mx-auto mb-4 border-4 border-orange-200">
+                        <h3 class="text-xl font-bold text-[#651E1E]">Mr.Chethan G S</h3>
+                        <p class="text-gray-600">Professor</p>
+                        <p class="text-sm text-gray-500 mt-2">Specialization: Algorithms & Theory of Computation</p>
+                    </div>
+                    <div class="bg-orange-100 p-6 rounded-3xl text-center shadow-md">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.Y04Jkg_VJQLs-PV7Itca-QHaHa?pid=Api&P=0&h=180" alt="Dr. Grace Hopper" class="rounded-full mx-auto mb-4 border-4 border-orange-200">
+                        <h3 class="text-xl font-bold text-[#651E1E]">Mrs.Kavya K N</h3>
+                        <p class="text-gray-600">Associate Professor</p>
+                        <p class="text-sm text-gray-500 mt-2">Specialization: Compiler Design & Programming Languages</p>
+                    </div>
+                    <div class="bg-orange-100 p-6 rounded-3xl text-center shadow-md">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.SeA88rz4zipfgyPLBQfIrgHaHa?pid=Api&P=0&h=180" alt="Dr. Ada Lovelace" class="rounded-full mx-auto mb-4 border-4 border-orange-200">
+                        <h3 class="text-xl font-bold text-[#651E1E]">Mr.Darshan A</h3>
+                        <p class="text-gray-600">Assistant Professor</p>
+                        <p class="text-sm text-gray-500 mt-2">Specialization: Artificial Intelligence & Machine Learning</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="section-container">
+            <div class="card bg-gray-50">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">7. Department Research & Publication Profile</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-gray-700 mb-4">
+                            Our department is actively engaged in cutting-edge research across various domains.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>"A Novel Approach to Secure Data Transmission in IoT Networks" - Dr. Sam Smith</li>
+                            <li>"Predictive Modeling of Genomic Data Using Machine Learning" - Dr. Alex Johnson</li>
+                        </ul>
+                        <p class="font-semibold text-[#651E1E] mt-6 flex items-center">
+                            <img src="https://placehold.co/50x50/fff/1e40af?text=SC" class="rounded-full mr-2">
+                            Research Coordinator: Dr. Sarah Chen <span class="font-normal text-gray-600 ml-2">(sarah.chen@university.edu)</span>
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://tse1.mm.bing.net/th/id/OIP.tS0sWXu3KWc5AYXohk-8owHaEJ?pid=Api&P=0&h=180" alt="Researchers in a lab" class="rounded-xl shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">8. Department Student Projects & Product Models</h2>
+                <p class="text-gray-700 mb-4">
+                    Students are encouraged to apply their knowledge through innovative projects and product development.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-orange-100 p-6 rounded-lg shadow-md">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.QXaHmRtKv2b4rxJlJ5KF3wHaE1?pid=Api&P=0&h=180" alt="Smart Healthcare System project" class="rounded-lg mb-4">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-2">Project: Smart Healthcare System</h3>
+                        <p class="text-gray-700">An AI-powered system for remote patient monitoring and diagnosis. Led by a team of final-year students.</p>
+                    </div>
+                    <div class="bg-orange-100 p-6 rounded-lg shadow-md">
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.ivqZRmNZxAR0l50msq5zfgHaDs?pid=Api&P=0&h=180" alt="Edu-Bot project" class="rounded-lg mb-4">
+                        <h3 class="text-2xl font-bold text-[#651E1E] mb-2">Product: Edu-Bot</h3>
+                        <p class="text-gray-700">A conversational chatbot for students to get instant academic assistance. Developed as a final-year project.</p>
+                    </div>
+                </div>
+                <p class="font-semibold text-[#651E1E] mt-6 flex items-center">
+                    <img src="https://placehold.co/50x50/fff/1e40af?text=ML" class="rounded-full mr-2">
+                    Project Coordinator: Dr. Michael Lee <span class="font-normal text-gray-600 ml-2">(michael.lee@university.edu)</span>
+                </p>
+            </div>
+        </section>
+
+        <section id="admissions" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">9. Department Admission Activities</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.ZYYLWGZALANlHEE_japiywHaFN?pid=Api&P=0&h=180" alt="Students and faculty at an open house" class="rounded-xl shadow-lg">
+                    <div>
+                        <p class="text-gray-700 mb-4">
+                            We host various activities to help prospective students understand our programs and campus life.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li><strong>Open House:</strong> Annual event for campus tours and interaction with faculty.</li>
+                            <li><strong>Webinars:</strong> Online sessions to discuss career opportunities and program details.</li>
+                            <li><strong>Application Workshops:</strong> Guidance for the application process and interviews.</li>
+                        </ul>
+                        <p class="font-semibold text-[#651E1E] mt-6 flex items-center">
+                            <img src="https://placehold.co/50x50/fff/1e40af?text=KF" class="rounded-full mr-2">
+                            Admissions Coordinator: Mrs. Kim Foster <span class="font-normal text-gray-600 ml-2">(admissions.cs@university.edu)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="iqac" class="section-container">
+            <div class="card bg-gray-50">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">10. IQAC Documents</h2>
+                <p class="text-gray-700 mb-4">
+                    The Internal Quality Assurance Cell (IQAC) documents ensure the continuous improvement of our academic programs.
+                </p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Academic Audit Reports</li>
+                    <li>Curriculum Development Plans</li>
+                    <li>Feedback and Action Taken Reports</li>
+                </ul>
+                <p class="font-semibold text-[#651E1E] mt-6 flex items-center">
+                    <img src="https://placehold.co/50x50/fff/1e40af?text=CE" class="rounded-full mr-2">
+                    IQAC Coordinator: Dr. Chris Evans <span class="font-normal text-gray-600 ml-2">(chris.evans@university.edu)</span>
+                </p>
+            </div>
+        </section>
+
+        <section id="placement" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">11. Department Placement Activities</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.5mNLE-6vVTQnwKhJTw7eqAHaC0?pid=Api&P=0&h=180" alt="Students at a job fair" class="rounded-xl shadow-lg">
+                    <div>
+                        <p class="text-gray-700 mb-4">
+                            Our dedicated placement cell works tirelessly to connect students with top-tier companies.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>Career counseling and mock interviews.</li>
+                            <li>Resume building workshops.</li>
+                            <li>Industry guest lectures and networking events.</li>
+                        </ul>
+                        <p class="font-semibold text-[#651E1E] mt-6 flex items-center">
+                            <img src="https://placehold.co/50x50/fff/1e40af?text=JS" class="rounded-full mr-2">
+                            Placement Coordinator: Mr. James Smith <span class="font-normal text-gray-600 ml-2">(james.smith@university.edu)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faculty-achievements" class="section-container">
+            <div class="card bg-orange-100">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">12. Department Faculty Achievements</h2>
+                <p class="text-gray-700 mb-4">
+                    Our faculty members are recognized for their excellence in teaching, research, and professional service.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-inner">
+                        <p class="font-bold text-[#651E1E]">Mr.Chethan G S</p>
+                        <p class="font-bold text-[#651E1E]">Awarded "Best Researcher of the Year" for his work in computational biology.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-inner">
+                        <p class="font-bold text-[#651E1E]">Mrs.Kavya K N</p>
+                        <p class="font-bold text-[#651E1E]">Received a patent for her innovative work in cybersecurity.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-inner">
+                        <p class="font-bold text-[#651E1E]">Mr.Darshan A</p>
+                        <p class="font-bold text-[#651E1E]">Elected as a Fellow of the Institute of Electrical and Electronics Engineers (IEEE).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="student-achievements" class="section-container">
+            <div class="card">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">13. Department Student Achievements</h2>
+                <p class="text-gray-700 mb-4">
+                    Our students excel in both academics and extracurricular activities, bringing great pride to the department.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-orange-100 p-4 rounded-lg shadow-inner">
+                        <p class="font-bold text-[#651E1E]">Team "Innovators"</p>
+                        <p class="font-bold text-[#651E1E]">Won the national hackathon with their groundbreaking app.</p>
+                    </div>
+                    <div class="bg-orange-100 p-4 rounded-lg shadow-inner">
+                        <p class="font-bold text-[#651E1E]">Jane Doe</p>
+                        <p class="font-bold text-[#651E1E]">Secured a gold medal in the university's sports championship.</p>
+                    </div>
+                    <div class="bg-orange-100 p-4 rounded-lg shadow-inner">
+                        <p class="font-bold text-[#651E1E]">Research Group</p>
+                        <p class="font-bold text-[#651E1E]">Published a research paper in a renowned international conference.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="alumni" class="section-container">
+            <div class="card bg-gray-50">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-4">14. Department Alumni</h2>
+                <p class="text-gray-700 mb-4">
+                    Our alumni are our greatest ambassadors, making significant contributions across the globe.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 bg-white rounded-lg shadow-inner">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.SeA88rz4zipfgyPLBQfIrgHaHa?pid=Api&P=0&h=180" alt="John Smith" class="rounded-full mx-auto mb-2">
+                        <h3 class="font-bold text-[#651E1E]">John Smith</h3>
+                        <p class="text-sm text-gray-600">Senior Software Engineer at Google</p>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-inner">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.Y04Jkg_VJQLs-PV7Itca-QHaHa?pid=Api&P=0&h=180"alt="Emily White" class="rounded-full mx-auto mb-2">
+                        <h3 class="font-bold text-[#651E1E]">Emily White</h3>
+                        <p class="text-sm text-gray-600">Founder of a successful AI startup</p>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-inner">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.SeA88rz4zipfgyPLBQfIrgHaHa?pid=Api&P=0&h=180" alt="Mark Johnson" class="rounded-full mx-auto mb-2">
+                        <h3 class="font-bold text-[#651E1E]">Mark Johnson</h3>
+                        <p class="text-sm text-gray-600">Head of Data Science at a leading tech firm</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-[#4d1515] text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="md:flex justify-between items-center text-left">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-lg font-bold mb-2">Contact Us</h3>
+                    <p class="text-sm">AIML Department, G M university</p>
+                    <p class="text-sm">Email: <a href="mailto:contact@aimldept.edu" class="hover:underline text-yellow-400">contact@gmu.aiml.in</a></p>
+                    <p class="text-sm">Phone:+91 7892410932</p>
+                </div>
+                <div class="flex-1 text-center md:text-right">
+                    <div class="flex justify-center md:justify-end space-x-4 mb-4">
+                        <a href="#" class="text-white hover:text-yellow-400 transition-colors duration-200">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.25 12.181c0-5.5-4.5-9.969-9.999-9.969s-9.999 4.469-9.999 9.969c0 4.965 3.653 9.07 8.441 9.878v-6.914h-2.522v-2.964h2.522v-2.222c0-2.492 1.507-3.868 3.766-3.868 1.077 0 2.016.192 2.292.277v2.607h-1.543c-1.222 0-1.46.581-1.46 1.438v1.89h2.909l-.475 2.964h-2.434v6.914c4.787-.808 8.441-4.913 8.441-9.878z"/></svg>
+                        </a>
+                        <a href="#" class="text-white hover:text-yellow-400 transition-colors duration-200">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.98 12.187c0 2.593-2.102 4.7-4.695 4.7s-4.694-2.107-4.694-4.7c0-2.592 2.101-4.7 4.694-4.7s4.695 2.108 4.695 4.7zm-2.001 0c0-1.488-1.206-2.695-2.694-2.695s-2.694 1.207-2.694 2.695c0 1.488 1.206 2.695 2.694 2.695s2.694-1.207 2.694-2.695zM22 6.552c-.114-1.076-1.002-1.928-2.078-2.01-1.096-.08-1.433-.099-4.223-.111-2.79-.012-3.127-.002-4.223.109-1.076.082-1.964.934-2.078 2.01-1.206 1.096-1.433 1.433-1.433 4.223s.227 3.127 1.433 4.223c.114 1.076 1.002 1.928 2.078 2.01 1.096.08 1.433.099 4.223.111 2.79.012 3.127-.002 4.223-.109 1.076-.082 1.964-.934 2.078-2.01 1.206-1.096 1.433-1.433 1.433-4.223s-.227-3.127-1.433-4.223zM20.243 14.5c.061 1.07-.02 1.554-.105 1.706-.188.358-.456.626-.814.814-.152.085-.636.166-1.706.105-2.79-.012-3.127-.002-4.223.109-1.076.082-1.964.934-2.078 2.01-1.206 1.096-1.433 1.433-4.223 1.433s-3.127-.227-4.223-1.433c-.114-1.076-1.002-1.928-2.078-2.01-1.096-.08-1.433-.099-4.223-.111-2.79-.012-3.127-.002-4.223-.109-1.076-.082-1.964-.934-2.078-2.01-1.206-1.096-1.433-1.433-1.433-4.223s.227-3.127 1.433-4.223c.114-1.076 1.002-1.928 2.078-2.01 1.096-.08 1.433-.099 4.223-.111 2.79-.012 3.127-.002 4.223.109 1.076.082 1.964.934 2.078 2.01 1.206 1.096 1.433 1.433 1.433 4.223s-.227 3.127-1.433 4.223z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-sm mt-4">&copy; 2024 Department of AIML. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 font-medium mb-1">Username</label>
+                    <input type="text" id="username" name="username" class="form-input" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+                <button type="submit" class="w-full bg-yellow-400 text-[#651E1E] font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors duration-300">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const authButtons = document.getElementById('auth-buttons');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+        const userInfo = document.getElementById('user-info');
+        const userDisplayName = document.getElementById('user-display-name');
+        const userRole = document.getElementById('user-role');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const loginModal = document.getElementById('login-modal');
+        const loginForm = document.getElementById('login-form');
+
+        // Toggle mobile menu
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.classList.toggle('open');
+        });
+
+        // Show login modal
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+
+        mobileLoginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.classList.remove('open');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Dummy authentication logic
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = loginForm.username.value;
+            // In a real application, you would use Firebase Auth to sign in
+            // For this demo, we just show/hide elements
+            if (username) {
+                // Simulate successful login
+                loginModal.style.display = 'none';
+                loginBtn.classList.add('hidden');
+                mobileLoginBtn.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+                mobileLogoutBtn.classList.remove('hidden');
+                userInfo.classList.remove('hidden');
+                userDisplayName.textContent = `Hello, ${username}!`;
+                userRole.textContent = 'Admin'; // Or get the real role
+            }
+        }
+
+        function handleLogout() {
+            // Simulate successful logout
+            loginBtn.classList.remove('hidden');
+            mobileLoginBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+            mobileLogoutBtn.classList.add('hidden');
+            userInfo.classList.add('hidden');
+        }
+
+        loginForm.addEventListener('submit', handleLogin);
+        logoutBtn.addEventListener('click', handleLogout);
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+    </script>
+</body>
+</html>
